@@ -159,6 +159,19 @@ class AuthService {
 
 
     }
+
+    async deleteUser({ id }) {
+        if (!isValidId(id)) {
+            throw new AppError("invalid_id", 400, "AuthService.updateUser")
+        }
+
+        const dataUser = await User.findById(id);
+        if(!dataUser){
+            
+        }
+
+
+    }
 }
 
 export default new AuthService();

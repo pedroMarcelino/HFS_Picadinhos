@@ -58,7 +58,19 @@ class AuthController {
         }
     }
 
-    
+    async deleteUser(req, res) {
+        try {
+            const id = req.params.id;
+            const data = await AuthService.deleteUser({ id })
+        } catch (error) {
+            return res.status(error.statusCode || 500).json({
+                error: error.message,
+                source: error.source
+            });
+        }
+    }
+
+
 }
 
 export default new AuthController();
