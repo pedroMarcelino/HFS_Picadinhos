@@ -9,8 +9,9 @@ class AuthController {
             return res.status(201).json(user);
 
         } catch (error) {
-            return res.status(400).json({
-                error: error.message
+            return res.status(error.statusCode || 500).json({
+                error: error.message,
+                source: error.source
             });
         }
     }
@@ -22,8 +23,9 @@ class AuthController {
             return res.status(200).json(data)
 
         } catch (error) {
-            return res.status(400).json({
-                error: error.message
+            return res.status(error.statusCode || 500).json({
+                error: error.message,
+                source: error.source
             });
         }
     }
@@ -34,8 +36,9 @@ class AuthController {
             const data = await AuthService.getCurrentUser({ id })
             return res.status(200).json(data)
         } catch (error) {
-            return res.status(400).json({
-                error: error.message
+            return res.status(error.statusCode || 500).json({
+                error: error.message,
+                source: error.source
             });
         }
         // res.status(200).json("teste")
@@ -46,9 +49,11 @@ class AuthController {
             const id = req.params.id;
             const { name, surname, ddd, phone_number } = req.body
             const data = await AuthService.updateUser({ id, name, surname, ddd, phone_number })
+            res.status(200).json(data)
         } catch (error) {
-            return res.status(400).json({
-                error: error.message
+            return res.status(error.statusCode || 500).json({
+                error: error.message,
+                source: error.source
             });
         }
     }

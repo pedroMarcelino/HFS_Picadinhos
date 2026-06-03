@@ -12,7 +12,7 @@ export function validaEmail(email) {
     if (!emailRegex.test(email)) {
         return {
             valid: false,
-            code: "invalid_email"
+            message: "invalid_email"
         };
 
     }
