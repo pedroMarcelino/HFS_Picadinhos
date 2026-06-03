@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken';
 import 'dotenv/config';
+import User from '../model/User.js';
 
-export function checkToken(req, res, next) {
+export async function checkToken(req, res, next) {
     const authHeader = req.headers['authorization']
     //primeira parte dps do = verifica se tem algo na var 
     // se tiver ele da o split pq vai chegar algo com
@@ -15,8 +16,10 @@ export function checkToken(req, res, next) {
     try {
 
         const secret = process.env.JWT_SECRET
-        jwt.verify(token, secret)
+        const decoded = jwt.verify(token, secret)
+
         console.log('token_verified');
+
         next();
 
     } catch (error) {

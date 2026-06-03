@@ -38,6 +38,15 @@ const userSchema = new mongoose.Schema(
             type: String,
             enum: ['client', 'admin'],
             default: 'client'
+        },
+        status: {
+            type: String,
+            enum: ['active', 'inactive'],
+            default: 'active'
+        },
+        deletedAt: {
+            type: Date,
+            default: null
         }
     },
     {

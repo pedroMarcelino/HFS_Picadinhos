@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import User from '../model/User.js';
 import { validaEmail } from '../utils/validaEmail.js';
-import { isValidToken } from '../utils/isValidToken.js'
+import { isValidId } from '../utils/isValidId.js'
 import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import { AppError } from '../utils/AppError.js';
@@ -74,6 +74,10 @@ class AuthService {
             throw new AppError("email_not_found", 404, "AuthService.Login");
         }
 
+        if (user.status !== 'active') {
+            throw new AppError("inactive_user", 403, "AuthService.Login");
+        }
+
         const checkpassword = await bcrypt.compare(password, user.password_hash)
         if (!checkpassword) {
             throw new AppError("password_mismatch", 400, "AuthService.Login");
@@ -99,7 +103,7 @@ class AuthService {
     }
 
     async getCurrentUser({ id }) {
-        if (!isValidToken(id)) {
+        if (!isValidId(id)) {
             throw new AppError("invalid_id", 400, "AuthService.getCurrentUser")
         }
 
@@ -113,7 +117,7 @@ class AuthService {
     }
 
     async updateUser({ id, name, surname, ddd, phone_number }) {
-        if (!isValidToken(id)) {
+        if (!isValidId(id)) {
             throw new AppError("invalid_id", 400, "AuthService.updateUser")
         }
 
