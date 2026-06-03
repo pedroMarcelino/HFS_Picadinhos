@@ -6,8 +6,16 @@ import { checkToken } from '../utils/checkToken.js';
 
 const authRoutes = Router();
 
+//Rota de registro de Usuario
 authRoutes.post('/register', AuthController.register);
+
+//Rota de Login de usuario 
 authRoutes.post('/login', AuthController.login);
-authRoutes.get('/me/:id', checkToken, AuthController.me)
+
+//Rota para pegar os dados do CurrentUser no sistema
+authRoutes.get('/me/:id', checkToken, AuthController.getCurrentUser)
+
+//Rota para autualizar as informações de perfil de usuario
+authRoutes.patch('/user/:id', checkToken, AuthController.updateUser)
 
 export default authRoutes;

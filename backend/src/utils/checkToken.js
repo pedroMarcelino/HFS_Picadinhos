@@ -16,6 +16,7 @@ export function checkToken(req, res, next) {
 
         const secret = process.env.JWT_SECRET
         jwt.verify(token, secret)
+        console.log('token_verified');
         next();
 
     } catch (error) {
