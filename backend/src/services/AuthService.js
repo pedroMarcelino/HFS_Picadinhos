@@ -165,12 +165,13 @@ class AuthService {
             throw new AppError("invalid_id", 400, "AuthService.updateUser")
         }
 
-        const dataUser = await User.findById(id);
-        if(!dataUser){
-            
-        }
+        const user = await User.findByIdAndUpdate(id,
+            {
+                status: 'inactive',
+                deletedAt: new Date()
+            });
 
-
+        return;
     }
 }
 

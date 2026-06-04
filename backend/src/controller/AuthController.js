@@ -6,7 +6,7 @@ class AuthController {
             const { name, email, password } = req.body;
 
             const user = await AuthService.register({ name, email, password });
-            return res.status(201).json(user);
+            return res.status(201).json({ msg: 'sucess_register', user });
 
         } catch (error) {
             return res.status(error.statusCode || 500).json({
@@ -20,7 +20,7 @@ class AuthController {
         try {
             const { email, password } = req.body;
             const data = await AuthService.login({ email, password })
-            return res.status(200).json(data)
+            return res.status(200).json({ msg: 'sucess_login', data })
 
         } catch (error) {
             return res.status(error.statusCode || 500).json({
@@ -49,7 +49,7 @@ class AuthController {
             const id = req.params.id;
             const { name, surname, ddd, phone_number } = req.body
             const data = await AuthService.updateUser({ id, name, surname, ddd, phone_number })
-            res.status(200).json(data)
+            res.status(200).json({ msg: 'user_updated', data })
         } catch (error) {
             return res.status(error.statusCode || 500).json({
                 error: error.message,
@@ -62,6 +62,7 @@ class AuthController {
         try {
             const id = req.params.id;
             const data = await AuthService.deleteUser({ id })
+            return res.status(200).json({ msg: 'user_deleted' })
         } catch (error) {
             return res.status(error.statusCode || 500).json({
                 error: error.message,
