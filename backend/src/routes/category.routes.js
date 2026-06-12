@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import CategoryController from '../controller/CategoryController.js'
 import { checkToken } from '../utils/checkToken.js';
+import { middlewareAdmin } from '../utils/middlewareAdmin.js';
 
 
 const categoryRoutes = Router();
@@ -9,7 +10,7 @@ const categoryRoutes = Router();
 //categoryRoutes.get('/', CategoryController.);
 
 //Rota cria todas as categorias ( apenas admin )
-categoryRoutes.post('/', CategoryController.createCategory);
+categoryRoutes.post('/', checkToken, middlewareAdmin, CategoryController.createCategory);
 
 //Rota que atualiza categorias
 //categoryRoutes.patch('/:id', CategoryController.);

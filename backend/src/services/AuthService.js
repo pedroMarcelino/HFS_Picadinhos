@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import User from '../model/User.js';
+import { User } from '../model/User.js';
 import { validaEmail } from '../utils/validaEmail.js';
 import { isValidId } from '../utils/isValidId.js'
 import jwt from 'jsonwebtoken';
@@ -87,7 +87,7 @@ class AuthService {
 
         try {
             const secret = process.env.JWT_SECRET;
-            const token = jwt.sign({ id: user.id }, secret)
+            const token = jwt.sign({ id: user.id, role: user.role }, secret)
 
             const data = {
                 msg: 'success_login',

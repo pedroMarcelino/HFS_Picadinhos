@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import 'dotenv/config';
-import User from '../model/User.js';
+import { User } from '../model/User.js';
 
 export async function checkToken(req, res, next) {
     const authHeader = req.headers['authorization']
@@ -10,7 +10,7 @@ export async function checkToken(req, res, next) {
     const token = authHeader && authHeader.split(" ")[1]
 
     if (!token) {
-        return res.status(401).json({ msg: "access_denied" })
+        return res.status(403).json({ msg: "access_denied", source: "checkToken" })
     }
 
     try {
@@ -21,6 +21,6 @@ export async function checkToken(req, res, next) {
 
     } catch (error) {
         console.log(error)
-        return res.status(400).json({ msg: "invalid_token" })
+        return res.status(400).json({ msg: "invalid_token", source: "checkToken" })
     }
 }
