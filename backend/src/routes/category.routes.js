@@ -7,7 +7,10 @@ import { middlewareAdmin } from '../utils/middlewareAdmin.js';
 const categoryRoutes = Router();
 
 //Rota que lista todas as categorias
-//categoryRoutes.get('/', CategoryController.);
+categoryRoutes.get('/', CategoryController.getCategories);
+
+//Rota que lista apenas uma categoria
+categoryRoutes.get('/:id', CategoryController.getOneCategory);
 
 //Rota cria todas as categorias ( apenas admin )
 categoryRoutes.post('/', checkToken, middlewareAdmin, CategoryController.createCategory);

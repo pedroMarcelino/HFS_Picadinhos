@@ -2,6 +2,7 @@ import { Category } from '../model/Category.js';
 import mongoose from 'mongoose';
 import { slugify } from '../utils/slugify.js'
 import { AppError } from '../utils/AppError.js';
+import { isValidId } from '../utils/isValidId.js';
 
 class CategoryService {
     async createCategory({ name }) {
@@ -30,11 +31,42 @@ class CategoryService {
 
             return category;
         } catch (error) {
-            throw new Error(error.message);
+            throw new Error("internal_error", 500, "categoryService.createCategory");
+        }
+    }
+
+    async getCategories() {
+        try {
+            const categories = await Category.find({ is_active: true })
+                .sort({
+                    name: 1
+                });
+            return categories;
+        } catch (error) {
+            throw new AppError(error.message, 400, "categoryService.getCategories")
+        }
+    }
+
+    async getOneCategory({ id }) {
+        const checkId = await isValidId(id);
+
+        console.log(checkId)
+
+        if (!checkId) {
+            throw new AppError("invalid_id", 400, "categoryService.getOneCategory")
+        }
+
+        try {
+            const category = await Category.findById({ _id: id });
+            return category;
+        } catch (error) {
+            throw new AppError(error.message, 500, "categoryService.getOneCategory")
         }
     }
 
     
+
+
 }
 
 

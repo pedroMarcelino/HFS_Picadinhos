@@ -15,7 +15,31 @@ class CategoryController {
         }
     }
 
-    async 
+    async getCategories(req, res) {
+        try {
+            const category = await CategoryService.getCategories({});
+            return res.status(200).json(category)
+        } catch (error) {
+            return res.status(error.statusCode || 500).json({
+                error: error.message,
+                source: error.source
+            });
+        }
+    }
+
+    async getOneCategory(req, res) {
+        try {
+            const id = req.params.id;
+            const oneCategory = await CategoryService.getOneCategory({ id })
+            return res.status(200).json(oneCategory)
+
+        } catch (error) {
+            return res.status(error.statusCode || 500).json({
+                error: error.message,
+                source: error.source
+            });
+        }
+    }
 }
 
 export default new CategoryController();
