@@ -19,7 +19,7 @@ categoryRoutes.post('/', checkToken, middlewareAdmin, CategoryController.createC
 categoryRoutes.patch('/:id', checkToken, middlewareAdmin, CategoryController.updateCategory);
 
 //Rota que deleta uma categoria
-//categoryRoutes.Delete('/:id', CategoryController.);
+categoryRoutes.delete('/:id', CategoryController.deleteCategory);
 
 export default categoryRoutes;
 

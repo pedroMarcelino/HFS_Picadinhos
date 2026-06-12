@@ -56,6 +56,20 @@ class CategoryController {
         }
     }
 
+    async deleteCategory(req, res) {
+        try {
+            const id = req.params.id;
+            console.log(id);
+            const deleteCategory = await CategoryService.deleteCategory({ id })
+            return res.status(200).json(deleteCategory)
+        } catch (error) {
+            return res.status(error.statusCode || 500).json({
+                error: error.message,
+                source: error.source
+            });
+        }
+    }
+
 
 }
 

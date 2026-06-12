@@ -65,10 +65,6 @@ class CategoryService {
     }
 
     async updateCategory({ name, is_active, id }) {
-        if (!id || id.trim() === '') {
-            throw new AppError("id_required", 400, "categoryService.updateCategory")
-        }
-
         const checkId = await isValidId(id);
         if (!checkId) {
             throw new AppError("invalid_id", 400, "categoryService.updateCategory")
@@ -94,14 +90,35 @@ class CategoryService {
             dataChange = true;
         }
 
-        if (dataChange) {
-            category.save();
+        try {
+            if (dataChange) {
+                category.save();
+            }
+
+            return category;
+        } catch (error) {
+            throw new AppError(error.message, 500, "categoryService.updateCategory")
+        }
+    }
+
+    async deleteCategory({ id }) {
+        const checkId = await isValidId(id);
+        if (!checkId) {
+            throw new AppError("invalid_id", 400, "categoryService.deleteCategory")
         }
 
-        return category;
+        try {
+            const category = await Category.findById({ _id: id })
 
+            if (category.is_active) {
+                category.is_active = false;
+                category.save();
+            }
 
-
+            return category;
+        } catch (error) {
+            throw new AppError(error.message, 500, "categoryService.deleteCategory")
+        }
     }
 
 
