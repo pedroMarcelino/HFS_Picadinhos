@@ -64,7 +64,45 @@ class CategoryService {
         }
     }
 
-    
+    async updateCategory({ name, is_active, id }) {
+        if (!id || id.trim() === '') {
+            throw new AppError("id_required", 400, "categoryService.updateCategory")
+        }
+
+        const checkId = await isValidId(id);
+        if (!checkId) {
+            throw new AppError("invalid_id", 400, "categoryService.updateCategory")
+        }
+
+        const category = await Category.findById({ _id: id })
+
+        if (!category) {
+            throw new AppError("category_not_found", 404, "categoryService.updateCategory")
+        }
+
+        let dataChange = false;
+
+        if (name !== undefined && name !== category.name) {
+            category.name = name;
+            category.slug = slugify(name)
+            dataChange = true;
+        }
+
+
+        if (is_active !== undefined && is_active !== category.is_active) {
+            category.is_active = is_active;
+            dataChange = true;
+        }
+
+        if (dataChange) {
+            category.save();
+        }
+
+        return category;
+
+
+
+    }
 
 
 }

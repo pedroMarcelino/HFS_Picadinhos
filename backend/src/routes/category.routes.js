@@ -16,7 +16,7 @@ categoryRoutes.get('/:id', CategoryController.getOneCategory);
 categoryRoutes.post('/', checkToken, middlewareAdmin, CategoryController.createCategory);
 
 //Rota que atualiza categorias
-//categoryRoutes.patch('/:id', CategoryController.);
+categoryRoutes.patch('/:id', checkToken, middlewareAdmin, CategoryController.updateCategory);
 
 //Rota que deleta uma categoria
 //categoryRoutes.Delete('/:id', CategoryController.);

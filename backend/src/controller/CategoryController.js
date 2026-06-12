@@ -40,6 +40,23 @@ class CategoryController {
             });
         }
     }
+
+    async updateCategory(req, res) {
+        try {
+            const id = req.params.id;
+            const { name, is_active } = req.body
+            //console.log(name, is_active, id)
+            const updateCategory = await CategoryService.updateCategory({ name, is_active, id })
+            return res.status(200).json(updateCategory)
+        } catch (error) {
+            return res.status(error.statusCode || 500).json({
+                error: error.message,
+                source: error.source
+            });
+        }
+    }
+
+
 }
 
 export default new CategoryController();
