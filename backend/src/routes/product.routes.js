@@ -6,8 +6,11 @@ import ProductController from '../controller/ProductController.js'
 
 const productRoutes = Router();
 
-//Rota de criacao de produto
-productRoutes.post('/', ProductController.RegisterProduct);
+//(Admin) Cria um novo produto.
+productRoutes.post('/', ProductController.CreateProduct);
+
+//(Admin) Atualiza informações de um produto.
+productRoutes.patch('/:id', ProductController.updateProduct)
 
 export default productRoutes;
 

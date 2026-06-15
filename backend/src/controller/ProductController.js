@@ -1,10 +1,10 @@
 import ProductService from "../services/ProductService.js";
 
 class ProductController {
-    async RegisterProduct(req, res) {
+    async CreateProduct(req, res) {
         try {
             const product = req.body;
-            const createProduct = await ProductService.RegisterProduct({ product })
+            const createProduct = await ProductService.CreateProduct({ product })
             return res.status(200).json(createProduct)
         } catch (error) {
             return res.status(error.statusCode || 500).json({
@@ -12,7 +12,20 @@ class ProductController {
                 source: error.source
             });
         }
-        //return res.status(200).json(deleteCategory)
+    }
+
+    async updateProduct(req, res) {
+        try {
+            const id = req.params.id;
+            const product = req.body;
+            const updateProduct = await ProductService.updateProduct({ product, id })
+            return res.status(200).json(updateProduct)
+        } catch (error) {
+            return res.status(error.statusCode || 500).json({
+                error: error.message,
+                source: error.source
+            });
+        }
     }
 }
 
