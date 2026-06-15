@@ -1,3 +1,4 @@
+//funcao para criar slug 'Couve Manteiga Picada' => 'couve-manteiga-picada'
 export const slugify = (text) => {
     return text
         .toLowerCase()

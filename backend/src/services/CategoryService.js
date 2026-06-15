@@ -31,7 +31,7 @@ class CategoryService {
 
             return category;
         } catch (error) {
-            throw new Error("internal_error", 500, "categoryService.createCategory");
+            throw new AppError("internal_error", 500, "categoryService.createCategory");
         }
     }
 

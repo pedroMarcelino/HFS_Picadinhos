@@ -1,6 +1,7 @@
 import jwt, { decode } from 'jsonwebtoken';
 import 'dotenv/config';
 
+// middleware para por na route e verificar se usuario é admin
 export async function middlewareAdmin(req, res, next) {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(" ")[1]

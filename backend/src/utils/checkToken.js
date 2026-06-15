@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import 'dotenv/config';
 import { User } from '../model/User.js';
 
+//middleware que checa o token no usuario 
 export async function checkToken(req, res, next) {
     const authHeader = req.headers['authorization']
     //primeira parte dps do = verifica se tem algo na var 

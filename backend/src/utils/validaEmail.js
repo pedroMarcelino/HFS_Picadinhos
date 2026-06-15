@@ -1,3 +1,4 @@
+//funcao para validar email.
 export function validaEmail(email) {
 
     if (!email || email.trim() === '') {
