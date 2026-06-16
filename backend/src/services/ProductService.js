@@ -49,14 +49,6 @@ class ProductService {
                 throw new AppError('product_not_found', 404, 'ProductService.updateProduct');
             }
 
-            const category = await Category.findById(
-                product.category_id
-            );
-
-            if (!category) {
-                throw new AppError('category_not_found', 404, 'ProductService.updateProduct');
-            }
-
             let change = false;
             if (product.name !== undefined && product.name !== productDataDB.name) {
                 const newSlug = await slugify(product.name);
@@ -77,14 +69,23 @@ class ProductService {
             }
 
             if (product.category_id !== undefined && product.category_id !== productDataDB.category_id.toString()) {
+
+                const checkCategory = await Category.findById(product.category_id);
+                if (!checkCategory) {
+                    throw new AppError('category_not_found', 404, 'ProductService.updateProduct');
+                }
+
                 productDataDB.category_id = product.category_id;
                 change = true;
             }
+
             if (product.price !== undefined && product.price !== productDataDB.price) {
                 productDataDB.price = product.price;
                 change = true;
             }
             if (product.unit !== undefined && product.unit !== productDataDB.unit) {
+                console.log(s)
+                const unitLowerCase = product.unit.toLowerCase();
                 productDataDB.unit = product.unit;
                 change = true;
             }
@@ -109,6 +110,16 @@ class ProductService {
             throw new AppError(error.message, error.statusCode || 500, error.source);
         }
     }
+
+    async deleteProduct({ id }) {
+        try {
+            return id;
+        } catch (error) {
+            throw new AppError(error.message, error.statusCode || 500, error.source);
+        }
+    }
+
+
 }
 
 export default new ProductService();

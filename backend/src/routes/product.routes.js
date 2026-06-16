@@ -12,5 +12,8 @@ productRoutes.post('/', ProductController.CreateProduct);
 //(Admin) Atualiza informações de um produto.
 productRoutes.patch('/:id', ProductController.updateProduct)
 
+//(Admin) Atualiza informações de um produto.
+productRoutes.delete('/:id', ProductController.deleteProduct)
+
 export default productRoutes;
 

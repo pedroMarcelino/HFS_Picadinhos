@@ -27,6 +27,19 @@ class ProductController {
             });
         }
     }
+
+    async deleteProduct(req, res) {
+        try {
+            const id = req.params.id;
+            const deleteProduct = await ProductService.deleteProduct({ id })
+            return res.status(200).json(deleteProduct)
+        } catch (error) {
+            return res.status(error.statusCode || 500).json({
+                error: error.message,
+                source: error.source
+            });
+        }
+    }
 }
 
 export default new ProductController();
