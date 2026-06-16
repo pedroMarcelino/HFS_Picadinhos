@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import Input from "../../components/ui/Input";
 
 function Home() {
     const navigate = useNavigate();
@@ -14,6 +15,15 @@ function Home() {
                 >
                     Acessar Login
                 </button>
+            </div>
+
+            <div className="">
+                <Input
+                    label="Email"
+                    type="email"
+                    placeholder="Digite seu email"
+                    error="Email inválido"
+                />
             </div>
         </div>
     );
