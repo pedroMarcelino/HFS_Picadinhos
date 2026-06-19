@@ -111,9 +111,17 @@ class ProductService {
         }
     }
 
-    async deleteProduct({ id }) {
+    async getProduct({ slug }) {
         try {
-            return id;
+
+            const productData = await Product.findOne({ slug });
+
+            if (!productData) {
+                throw new AppError('slug_not_found', 404, 'productService.getProduct')
+            }
+
+            return productData;
+
         } catch (error) {
             throw new AppError(error.message, error.statusCode || 500, error.source);
         }
