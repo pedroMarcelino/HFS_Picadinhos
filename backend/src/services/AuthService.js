@@ -161,17 +161,22 @@ class AuthService {
     }
 
     async deleteUser({ id }) {
-        if (!isValidId(id)) {
-            throw new AppError("invalid_id", 400, "AuthService.updateUser")
+        try {
+            if (!isValidId(id)) {
+                throw new AppError("invalid_id", 400, "AuthService.updateUser")
+            }
+
+            const user = await User.findByIdAndUpdate(id,
+                {
+                    status: 'inactive',
+                    deletedAt: new Date()
+                });
+
+            return;
+        } catch (error) {
+            throw new AppError(error.message, 500, "AuthService.deleteUser");
         }
 
-        const user = await User.findByIdAndUpdate(id,
-            {
-                status: 'inactive',
-                deletedAt: new Date()
-            });
-
-        return;
     }
 }
 

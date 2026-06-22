@@ -6,8 +6,10 @@ import AddressController from '../controller/AddressController.js';
 
 const addressRoute = Router();
 
-//(Admin) Cria um novo produto.
-addressRoute.post('/', checkToken, middlewareAdmin, ProductController.CreateProduct);
+//(Privada) Cria um novo produto.
+addressRoute.post('/', AddressController.createAddress);
+
+
 
 
 
