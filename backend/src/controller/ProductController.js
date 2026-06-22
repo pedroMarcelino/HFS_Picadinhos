@@ -45,6 +45,36 @@ class ProductController {
             });
         }
     }
+
+    async getProductsByCategory(req, res) {
+        try {
+            const categorySlug = req.params.slug
+            if (categorySlug == "") {
+                throw new AppError('empty_slug', 401, 'productService.getProduct')
+            }
+
+            const productsData = await ProductService.getProductsByCategory({ categorySlug })
+            return res.status(200).json(productsData);
+
+        } catch (error) {
+            return res.status(error.statusCode || 500).json({
+                error: error.message,
+                source: error.source
+            });
+        }
+    }
+
+    async getProducts(req, res) {
+        try {
+            const products = await ProductService.getProducts();
+            return res.status(200).json(products);
+        } catch (error) {
+            return res.status(error.statusCode || 500).json({
+                error: error.message,
+                source: error.source
+            });
+        }
+    }
 }
 
 export default new ProductController();

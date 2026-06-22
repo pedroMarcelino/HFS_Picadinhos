@@ -127,6 +127,44 @@ class ProductService {
         }
     }
 
+    async getProductsByCategory({ categorySlug }) {
+        try {
+            const category = await Category.findOne({
+                slug: categorySlug,
+            });
+
+            if (!category) {
+                throw new AppError('category_not_found', 404, 'productService.getProductsByCategory')
+            }
+
+            const products = await Product
+                .find({
+                    category_id: category._id,
+                    is_active: true
+                })
+                .populate('category_id', 'name slug');
+
+            if (!products || products.length == 0) {
+                throw new AppError('products_not_found', 404, 'productService.getProductsByCategory');
+            }
+
+            return products;
+
+        } catch (error) {
+            throw new AppError(error.message, error.statusCode || 500, error.source);
+        }
+    }
+
+    async getProducts() {
+        try {
+            const products = await Product.find().where({ is_active: true })
+            return products;
+
+        } catch (error) {
+            throw new AppError(error.message, error.statusCode || 500, error.source);
+        }
+    }
+
 
 }
 
