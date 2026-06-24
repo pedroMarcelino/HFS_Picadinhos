@@ -24,3 +24,4 @@ authRoutes.delete('/delete/:id', checkToken, AuthController.deleteUser)
 
 
 export default authRoutes;
+
