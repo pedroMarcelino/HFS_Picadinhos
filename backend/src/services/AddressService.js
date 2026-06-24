@@ -13,12 +13,10 @@ class AddressService {
                 "label",
                 "street",
                 "number",
-                "complement",
                 "neighborhood",
                 "city",
                 "state",
-                "zip_code",
-                "is_default",
+                "zip_code"
             ], 'AddressService.createAddress');
 
             if (!isValidId(data['user_id'])) {
@@ -30,10 +28,19 @@ class AddressService {
                 throw new AppError('user_not_found', 404, 'AddressService.createAddress')
             }
 
-            const addressSave = await Address.create(data)
+            const user_id = data['user_id'];
 
-            //antes de salvar verificar se usuario ja nao tem casa defalt
+            const hasDefaultAddress = await Address.findOne({
+                user_id,
+                is_default: true
+            });
 
+            if (!hasDefaultAddress) {
+                //nao possue endereco default
+                data['is_default'] = true;
+            }
+
+            const addressSave = await Address.create(data);
             return addressSave;
 
         } catch (error) {
