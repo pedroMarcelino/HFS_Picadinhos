@@ -13,6 +13,19 @@ class AddressController {
             });
         }
     }
+
+    async getAddress(req, res) {
+        try {
+            const token = req.headers['authorization'];
+            const Addresses = await AddressService.getAddress({ token })
+            return res.status(200).json(Addresses);
+        } catch (error) {
+            return res.status(error.statusCode || 500).json({
+                error: error.message,
+                source: error.source
+            });
+        }
+    }
 }
 
 export default new AddressController();

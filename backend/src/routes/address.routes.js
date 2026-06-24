@@ -10,7 +10,7 @@ const addressRoute = Router();
 addressRoute.post('/', checkToken, AddressController.createAddress);
 
 //(Privada) Traz todos os enderecos do usuario logado.
-// addressRoute.get('/', checkToken, AddressController.getAddress)
+addressRoute.get('/', checkToken, AddressController.getAddress)
 
 
 

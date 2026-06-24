@@ -3,6 +3,9 @@ import { isValidId } from '../utils/isValidId.js'
 import { AppError } from '../utils/appError.js';
 import { Address } from '../model/Adress.js'
 import { User } from '../model/User.js';
+import 'dotenv/config';
+import jwt from 'jsonwebtoken';
+
 
 class AddressService {
     async createAddress({ data }) {
@@ -45,6 +48,30 @@ class AddressService {
 
         } catch (error) {
             throw new AppError(error.message, 500, "AddressService.createAddress");
+        }
+    }
+
+    async getAddress({ token }) {
+        try {
+
+            const authHeader = token
+            const tokenSplit = authHeader && authHeader.split(" ")[1]
+            console.log('asdasdsadsad');
+            const secret = process.env.JWT_SECRET
+            const decoded = jwt.verify(tokenSplit, secret)
+
+            const user_id = decoded.id;
+
+            const userAddresses = await Address.find({ user_id })
+
+            if (!userAddresses || userAddresses.length <= 0) {
+                throw new AppError('address_not_found', 404, 'AddressService.getAddress')
+            }
+
+            return userAddresses;
+
+        } catch (error) {
+            throw new AppError(error.message, 500, "AddressService.getAddress");
         }
     }
 
