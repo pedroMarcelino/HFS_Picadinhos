@@ -18,6 +18,7 @@ export async function checkToken(req, res, next) {
         const secret = process.env.JWT_SECRET
         const decoded = jwt.verify(token, secret)
         console.log('token_verified');
+        req.user = decoded;
         next();
 
     } catch (error) {

@@ -53,39 +53,39 @@ class AuthService {
     }
 
     async login({ email, password }) {
-
-        if (!email || email.trim() === '') {
-
-            throw new AppError("email_required", 400, "AuthService.Login");
-
-            const valida = validaEmail(email);
-            if (!valida.valid) {
-                throw new Error(valida.code);
-            }
-        }
-
-        if (!password || password.trim() === '') {
-            throw new AppError("password_required", 400, "AuthService.Login");
-        }
-
-        const user = await User.findOne({ email: email })
-
-        if (!user) {
-            throw new AppError("email_not_found", 404, "AuthService.Login");
-        }
-
-        if (user.status !== 'active') {
-            throw new AppError("inactive_user", 403, "AuthService.Login");
-        }
-
-        const checkpassword = await bcrypt.compare(password, user.password_hash)
-        if (!checkpassword) {
-            throw new AppError("password_mismatch", 400, "AuthService.Login");
-        }
-
-        console.log(user.id)
-
         try {
+            if (!email || email.trim() === '') {
+
+                throw new AppError("email_required", 400, "AuthService.Login");
+
+                const valida = validaEmail(email);
+                if (!valida.valid) {
+                    throw new Error(valida.code);
+                }
+            }
+
+            if (!password || password.trim() === '') {
+                throw new AppError("password_required", 400, "AuthService.Login");
+            }
+
+            const user = await User.findOne({ email: email })
+
+            if (!user) {
+                throw new AppError("email_not_found", 404, "AuthService.Login");
+            }
+
+            if (user.status !== 'active') {
+                throw new AppError("inactive_user", 403, "AuthService.Login");
+            }
+
+            const checkpassword = await bcrypt.compare(password, user.password_hash)
+            if (!checkpassword) {
+                throw new AppError("password_mismatch", 400, "AuthService.Login");
+            }
+
+            console.log(user.id)
+
+
             const secret = process.env.JWT_SECRET;
             const token = jwt.sign({ id: user.id, role: user.role }, secret)
 

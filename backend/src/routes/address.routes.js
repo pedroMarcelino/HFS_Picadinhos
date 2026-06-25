@@ -12,6 +12,12 @@ addressRoute.post('/', checkToken, AddressController.createAddress);
 //(Privada) Traz todos os enderecos do usuario logado.
 addressRoute.get('/', checkToken, AddressController.getAddress)
 
+//(Privada) Traz todos os enderecos do usuario logado.
+addressRoute.delete('/:id', checkToken, AddressController.deleteAddress)
+
+//(Privada) Traz todos os enderecos do usuario logado.
+addressRoute.patch('/:id', checkToken, AddressController.updateAddress)
+
 
 
 
