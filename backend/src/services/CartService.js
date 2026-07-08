@@ -105,13 +105,13 @@ class CartService {
 
     }
 
-    async updateCart({ cartItemId, cartItemBody }) {
+    async updateCart({ cartItemId, cartItemData }) {
         try {//testar e validar
             if (!isValidId(cartItemId)) {
                 throw new AppError('invalid_id', 400, 'cartService.updateCart')
             }
 
-            if (cartItemBody.quantity < 0) {
+            if (cartItemData.quantity < 0) {
                 throw new AppError("invalid_quantity", 400, "cartService.updateCart");
             }
 
@@ -120,7 +120,7 @@ class CartService {
                 throw new AppError("item_not_found", 404, "cartService.updateCart")
             }
 
-            if (cartItemBody.quantity === 0) {
+            if (cartItemData.quantity === 0) {
                 const deleteItem = await CartItem.findByIdAndDelete({ _id: cartItemId })
                 if (!deleteItem) {
                     throw new AppError("item_not_found", 404, "cartService.updateCart");
@@ -130,18 +130,18 @@ class CartService {
 
             const product = await Product.findById(cartItem.product_id);
 
-            if (cartItemBody.quantity > product.stock_quantity) {
+            if (cartItemData.quantity > product.stock_quantity) {
                 throw new AppError("insufficient_stock", 400, "cartService.updateCart");
             }
 
-            cartItem.quantity = cartItemBody.quantity;
+            cartItem.quantity = cartItemData.quantity;
             return cartItem.save();
 
         } catch (error) {
             throw new AppError(
                 error.message,
                 error.statusCode || 500,
-                error.source || "cartService.getCart"
+                error.source || "cartService.UpdateCart"
             );
         }
     }

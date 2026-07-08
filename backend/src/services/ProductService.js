@@ -84,7 +84,6 @@ class ProductService {
                 change = true;
             }
             if (product.unit !== undefined && product.unit !== productDataDB.unit) {
-                console.log(s)
                 const unitLowerCase = product.unit.toLowerCase();
                 productDataDB.unit = product.unit;
                 change = true;

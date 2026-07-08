@@ -16,6 +16,6 @@ export async function connection() {
         })
         .catch((error) => {
             console.log("-----!ERRO NA CONEXAO COM BANCO DE DADOS!-----");
-            console.log(error);
+            console.log(error.message);
         });
 }
