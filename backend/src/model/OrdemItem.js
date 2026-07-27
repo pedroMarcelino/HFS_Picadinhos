@@ -1,13 +1,44 @@
-// {
-//     _id,
-//     order_id,
-//     product_id,
+import mongoose from "mongoose";
 
-//     product_name,
+const orderItemSchema = new mongoose.Schema(
+    {
+        order_id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Order",
+            required: true,
+        },
 
-//     quantity,
+        product_id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Product",
+            required: true,
+        },
 
-//     unit_price,
+        quantity: {
+            type: Number,
+            required: true,
+            min: 1,
+        },
 
-//     subtotal
-// }
+        unit_price: {
+            type: Number,
+            required: true,
+            min: 0,
+        },
+
+        subtotal: {
+            type: Number,
+            required: true,
+            min: 0,
+        },
+    },
+    {
+        timestamps: {
+            createdAt: "created_at",
+            updatedAt: "updated_at",
+        },
+        versionKey: false,
+    }
+);
+
+export const OrderItem = mongoose.model("OrderItem", orderItemSchema);

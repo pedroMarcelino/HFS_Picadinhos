@@ -1,19 +1,53 @@
-// {
-//     _id,
-//     user_id,
-//     address_id,
+import mongoose from "mongoose";
 
-//     total_amount,
+const orderSchema = new mongoose.Schema(
+    {
+        user_id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: true,
+        },
 
-//     status: [
-//         "pending",
-//         "confirmed",
-//         "preparing",
-//         "delivering",
-//         "completed",
-//         "cancelled"
-//     ],
+        address_id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Address",
+            required: true,
+        },
 
-//     created_at,
-//     updated_at
-// }
+        status: {
+            type: String,
+            enum: [
+                "pending",
+                "paid",
+                "preparing",
+                "delivering",
+                "completed",
+                "canceled",
+            ],
+            default: "pending",
+            required: true,
+        },
+
+        notes: {
+            type: String,
+            trim: true,
+            maxlength: 500,
+            default: "",
+        },
+
+        total: {
+            type: Number,
+            required: true,
+            min: 0,
+        },
+    },
+    {
+        timestamps: {
+            createdAt: "created_at",
+            updatedAt: "updated_at",
+        },
+        versionKey: false,
+    }
+);
+
+export const Order = mongoose.model("Order", orderSchema);
