@@ -5,18 +5,18 @@ import OrderController from '../controller/OrderController.js';
 const orderRoute = Router();
 
 //Cria um novo pedido a partir do carrinho do usuário logado.
-orderRoute.post('/orders', checkToken, OrderController.createOrder);
+orderRoute.post('/', checkToken, OrderController.createOrder);
 
 //Retorna todos os pedidos do usuário logado.
-orderRoute.get('/orders');
+// orderRoute.get('/orders');
 
 //Retorna os detalhes de um pedido específico do usuário.
-orderRoute.get('/orders/:id')
+// orderRoute.get('/orders/:id')
 
 //Cancela um pedido, caso ainda esteja em um status que permita cancelamento.
-orderRoute.patch('orders/:id/cancel')
+// orderRoute.patch('orders/:id/cancel')
 
 //Retorna o status atual e o histórico de acompanhamento do pedido.
-orderRoute.get('orders/:id/tracking')
+// orderRoute.get('orders/:id/tracking')
 
 export default orderRoute;

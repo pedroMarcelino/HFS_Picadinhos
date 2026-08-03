@@ -4,6 +4,7 @@ import productRoutes from './product.routes.js';
 import categoryRoutes from './category.routes.js';
 import addressRoute from './address.routes.js';
 import cartRoutes from './cart.routes.js';
+import orderRoute from './order.routes.js';
 
 const routes = Router();
 
@@ -12,6 +13,7 @@ routes.use('/product', productRoutes);
 routes.use('/category', categoryRoutes);
 routes.use('/address', addressRoute);
 routes.use('/cart', cartRoutes)
+routes.use('/order', orderRoute)
 
 
 export default routes;
