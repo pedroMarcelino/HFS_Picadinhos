@@ -1,7 +1,7 @@
 import { validateRequired } from '../utils/validateRequired.js';
 import { isValidId } from '../utils/isValidId.js'
 import { AppError } from '../utils/appError.js';
-import { Address } from '../model/Adress.js'
+import { Address } from '../model/Address.js'
 import { User } from '../model/User.js';
 
 class AddressService {
